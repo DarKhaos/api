@@ -13,23 +13,8 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Product(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, editable=False,
-                          unique=True, primary_key=True)
-    name = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    tags = models.ManyToManyField(Tag)
-
-    class Meta:
-        verbose_name = "Product"
-        verbose_name_plural = "Products"
-
-    def __str__(self):
-        return self.name
-
-
+    
+    
 class Pack(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False,
                           unique=True, primary_key=True)
@@ -38,6 +23,19 @@ class Pack(models.Model):
     class Meta:
         verbose_name = "Pack"
         verbose_name_plural = "Packs"
+
+
+class Product(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=False,
+                          unique=True, primary_key=True)
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    tags = models.ManyToManyField(Tag)
+    pack = models.ForeignKey(Pack, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
 
     def __str__(self):
         return self.name
